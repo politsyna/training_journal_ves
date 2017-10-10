@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Node_ves_entity_presave.
+ */
+function node_ves_entity_presave(EntityInterface $node) {
+  if (method_exists($node, 'getType') && $node->getType() == 'ves') {
+    $time = strtotime($node->field_ves_data->value);
+    $title = format_date($time, 'tolko_data');
+    $node->title->setValue($title);
+  }
+}
